@@ -2,19 +2,19 @@
 
 require 'Planfix_API.php';
 
-$PF = new Planfix_API(array('apiKey' => 'YOUR_API_KEY', 'apiSecret' => 'YOUR_API_SECRET'));
+$pf = new Planfix_API(array('apiKey' => 'YOUR_API_KEY', 'apiSecret' => 'YOUR_API_SECRET'));
 
-$PF->setAccount('YOUR_ACCOUNT');
+$pf->setAccount('YOUR_ACCOUNT');
 
 session_start();
 
 if (empty($_SESSION['planfixSid'])) {
-    $PF->setUser(array('login' => 'YOUR_LOGIN', 'password' => 'YOUR_PASSWORD'));
-    $PF->authenticate();
-    $_SESSION['planfixSid'] = $PF->getSid();
+    $pf->setUser(array('login' => 'YOUR_LOGIN', 'password' => 'YOUR_PASSWORD'));
+    $pf->authenticate();
+    $_SESSION['planfixSid'] = $pf->getSid();
 }
 
-$PF->setSid($_SESSION['planfixSid']);
+$pf->setSid($_SESSION['planfixSid']);
 
 $method = 'client.getList';
 $params = array(
@@ -24,7 +24,7 @@ $params = array(
     'pageCurrent' => 1
 );
 
-$clients = $PF->api($method, $params);
+$clients = $pf->api($method, $params);
 
 echo '<pre>'.print_r($clients, 1).'</pre>';
 
@@ -49,7 +49,7 @@ $batch = array(
     )
 );
 
-list($projects, $tasks) = $PF->api($batch);
+list($projects, $tasks) = $pf->api($batch);
 
 echo '<pre>'.print_r($tasks, 1).'</pre>';
 echo '<pre>'.print_r($projects, 1).'</pre>';
